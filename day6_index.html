@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intergrating js with html</title>
+    <style>
+        #container{
+            border: 5px solid red;
+        }
+
+        #container div{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1{
+            margin-bottom: 0%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
+<script>
+    var card = document.createElement("div")
+    
+    var image = document.createElement("img")
+    image.src = "https://imgs.search.brave.com/5IEr5I-xXTBTBiN6RY-cBCoVSXGxyesIwYSAfdFQDz8/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9oZWxp/b3MtaS5tYXNoYWJs/ZS5jb20vaW1hZ2Vy/eS9yZXZpZXdzLzA0/SmFqWnZiRDdmZ2tT/TGZFeVZ1bTFrL2hl/cm8taW1hZ2UuZmls/bC5zaXplXzEyNDh4/NzAyLnYxNjk1MTMz/Mjc0LmpwZw"
+
+    var h1 = document.createElement("h1")
+    h1.textContent = "iphone15 Pro"
+
+    var price = document.createElement("h2")
+    price.textContent = "150,000"
+
+    card.append(image, h1, price)
+    document.getElementById("container").append(card)
+
+
+</script>

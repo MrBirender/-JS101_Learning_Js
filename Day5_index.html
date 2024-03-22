@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Web form</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        #form-container{
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .formgroup{
+            margin-bottom: 20px;
+        }
+        .formgroup label{
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .formgroup input{
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .formgroup select{
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .formgroup input[type= "submit"]{
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .formgroup input[type= "submit"].hover{
+            background-color: #0056b3;
+        }
+
+        #table{
+            margin-left: 100px;
+        }
+        a{
+            margin-right: 50px;
+        }
+      
+    </style>
+</head>
+<body>
+    <a href="index.html">Data_page</a>
+    <div id="form-container">
+        <form action="#">
+            <div class="formgroup">
+                <label for="name">Name</label>
+                <input id="Name" type="text" placeholder="name...">
+            </div>
+            <div class="formgroup">
+                <label for="gender">Gender</label>
+                <select name="gender" id="gender">
+                    <option value="">select_gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="others">Others</option>
+                </select>
+            </div>
+            <div class="formgroup">
+                <label for="age">Age</label>
+                <input id="age" type="text" placeholder="Age...">
+            </div>
+            <div class="formgroup">
+                <input type="submit" value="submit">
+            </div>
+            
+        </form>
+    </div>
+    <!-- how to append table with js output -->
+    <div id="table" >
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <td>Birender</td>
+                <td>Male</td>
+                <td>24</td>
+            </tr> -->
+        </tbody>
+    </table></div>
+    <div id="filterbox">
+        <select name="filter" id="filterData">
+            <option value="">filterByGender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+    </div>
+</body>
+</html>
+<script>
+    var btn = document.querySelector("form")
+    btn.addEventListener("submit", function(){
+        addOnClick()
+    })
+
+    var array = JSON.parse(localStorage.getItem("userData")) ||[];
+    valueOutput(array)
+
+    function addOnClick(){
+        event.preventDefault();
+        var name = document.getElementById("Name").value
+        var gender = document.getElementById("gender").value
+        var age = document.getElementById("age").value
+
+        var obj = {
+            name: name,
+            gender: gender,
+            age: age 
+        }
+
+        array.push(obj)
+        localStorage.setItem("userData", JSON.stringify(array))
+        valueOutput(array)
+    }
+
+    // filtering data on basis of gender:
+    var filterData = document.getElementById("filterData");
+    filterData.addEventListener("change", function(){
+        selectedFilter()
+    })
+    
+
+        // append the js output in table: using array:
+        function valueOutput(array){
+            document.querySelector("tbody").innerHTML = ""
+            array.forEach(function(ele,i){
+                var tr = document.createElement("tr")
+        
+                var td1 = document.createElement("td")
+                td1.textContent = ele.name
+                var td2 = document.createElement("td")
+                td2.textContent = ele.gender
+                var td3 = document.createElement("td")
+                td3.textContent = ele.age
+
+                var btn = document.createElement("button")
+                btn.textContent = "delete"
+                btn.addEventListener("click", function(){
+                    deleteArr(i)
+                })
+
+                tr.append(td1, td2, td3, btn)
+                document.querySelector("tbody").append(tr)
+            })
+
+            
+            function deleteArr(i){
+                    array.splice(i,1)
+                    console.log(array)
+                    valueOutput(array)
+                }
+        
+        }
+
+        function selectedFilter(){
+            var filterValue = filterData.value
+           
+            var result = array.filter(function(ele){
+                return ele.gender === filterValue
+            })
+            console.log(result)
+        }
+    
+        
+       
+
+
+</script>

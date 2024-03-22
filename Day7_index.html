@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+</head>
+<style>
+        #container{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+            border: 2px solid goldenrod;
+            width: 90%;
+            margin: auto;
+        }
+
+        #container div{
+            border-radius: 10px;
+            text-align: center;
+        }
+</style>
+<body>
+    <a href="newIndex.html">Home Page</a>
+    <div id="container"></div>
+</body>
+</html>
+<script>
+    
+    var cartArr = JSON.parse(localStorage.getItem("cartArr")) || [];
+    displayCart(cartArr)
+
+    function displayCart(arr){
+        arr.forEach(function(ele, i){
+            var card = document.createElement("div");
+
+            var image = document.createElement("img");
+            image.src = ele.image
+
+            var name = document.createElement("h2");
+            name.textContent = ele.name
+
+            var price = document.createElement("h2");
+            price.textContent = ele.price
+
+            card.append(image, name, price)
+            document.getElementById("container").append(card)
+        })
+       
+    }
+
+    displayCart(cartArr)
+</script>
